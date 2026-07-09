@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: todo-app
+
+
+server:
+  port: ${PORT:8081}
