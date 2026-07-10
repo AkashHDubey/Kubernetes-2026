@@ -14,4 +14,7 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: dubeaka/todo-app:1.0
+          image: dubeaka/todo-app:2.2
+          env:
+            - name: PORT
+              value: "8080"
