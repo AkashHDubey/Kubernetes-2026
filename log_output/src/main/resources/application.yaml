@@ -1,3 +1,6 @@
 spring:
   application:
     name: log
+
+server:
+  port: ${PORT:8085}
