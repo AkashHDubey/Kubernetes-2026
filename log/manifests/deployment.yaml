@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-output-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-output
+  template:
+    metadata:
+      labels:
+        app: log-output
+    spec:
+      volumes: # Define volume
+        - name: file
+          emptyDir: {}
+      containers:
+        - name: log-output-generate
+          image: dubeaka/log-generate:1.0
+          volumeMounts: # Mount volume
+            - name: file
+              mountPath: /usr/src/app/file
+        - name: log-output-show
+          image: dubeaka/log-show:1.0
+          volumeMounts: # Mount volume
+            - name: file
+              mountPath: /usr/src/app/file

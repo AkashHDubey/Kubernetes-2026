@@ -14,7 +14,7 @@ java {
 }
 
 bootJar {
-	archiveFileName = 'log.jar'
+	archiveFileName = 'log_output.jar'
 }
 
 repositories {
