@@ -24,10 +24,8 @@ public class LogApplication {
             currentString = Instant.now()+" "+randomString;
             try (BufferedWriter writer = Files.newBufferedWriter(
                     Paths.get("/usr/src/app/file/timestamp.txt"),
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND)) {
-
-                writer.write(currentString+"\n");
+                    StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING)) {
+                writer.write(currentString);
             } catch (IOException e) {
                 e.printStackTrace();
             }

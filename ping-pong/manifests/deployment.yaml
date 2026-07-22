@@ -12,6 +12,13 @@ spec:
       labels:
         app: ping-pong
     spec:
+      volumes:
+        - name: shared
+          persistentVolumeClaim:
+            claimName: ping-pong-share
       containers:
         - name: ping-pong
-          image: dubeaka/ping-pong:1.0
+          image: dubeaka/ping-pong:3.0
+          volumeMounts:
+            - name: shared
+              mountPath: /usr/src/app/file

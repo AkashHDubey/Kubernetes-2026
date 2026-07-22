@@ -14,6 +14,9 @@ public class StateController {
         String content;
         try {
             content = Files.readString(Paths.get("/usr/src/app/file/timestamp.txt"));
+            content = content
+                    + "\n" + "Ping / Pongs: "
+                    + Files.readString(Paths.get("/usr/src/app/file/ping-pong.txt"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
