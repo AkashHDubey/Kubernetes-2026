@@ -3,12 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Todo</title>
+    <!-- FIX: Correct Tailwind CSS Play CDN Link -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center;">
-<h1>Todo App</h1>
-    <img th:src="@{/image}" alt="Stored Project Image" width="400"/>
-<p>DevOps with Kubernetes 2026</p>
+<body class="bg-slate-50 min-h-screen py-12 px-4 flex justify-center">
+
+<!-- Clean, centered main card container -->
+<div class="w-full max-w-xl bg-white p-8 rounded-2xl shadow-md border border-slate-100 h-fit">
+
+    <!-- Header & Image Area -->
+    <div class="flex flex-col items-center text-center mb-8">
+        <img th:src="@{/image}" alt="Stored Project Image" class="w-[250px] h-[250px] object-cover rounded-xl mb-4 shadow-sm"/>
+        <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight">Todo App</h1>
+    </div>
+
+    <!-- Form Section styled with Tailwind -->
+    <form th:action="@{/send-todo}" method="post" class="flex gap-2 mb-8">
+        <input type="text"
+               name="messageText"
+               placeholder="Enter the todo (max 140 characters)"
+               maxlength="140"
+               class="flex-grow border-2 border-emerald-200 focus:border-emerald-400 px-4 py-2.5 rounded-xl outline-none transition-colors text-slate-700 bg-slate-50 placeholder-slate-400" />
+
+        <button type="submit"
+                class="bg-emerald-400 hover:bg-emerald-500 text-slate-800 px-6 py-2.5 rounded-xl font-bold transition-all shadow-sm active:scale-95">
+            Send
+        </button>
+    </form>
+
+    <!-- Dynamic List Section -->
+    <div>
+        <h2 class="text-xl font-bold text-slate-700 mb-4 flex items-center justify-between">
+            <span>Tasks</span>
+            <!-- Optional: Shows total number of tasks from your model -->
+            <span th:text="${#lists.size(itemList)}" class="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-full font-semibold">0</span>
+        </h2>
+
+        <!-- Flex list for clean rows instead of overlapping grids -->
+        <ul class="flex flex-col gap-3">
+            <!-- If the list is empty, show a fallback message -->
+            <li th:if="${#lists.isEmpty(itemList)}" class="text-center py-8 text-slate-400 border-2 border-dashed border-slate-100 rounded-xl">
+                No todos yet. Add one above!
+            </li>
+
+            <!-- Thymeleaf Loop -->
+            <li th:each="item : ${itemList}"
+                class="bg-slate-50 p-4 rounded-xl border border-slate-100 hover:border-slate-200 transition-all flex items-center justify-between group">
+
+                <span th:text="${item}" class="text-base font-medium text-slate-700 break-all pr-4">Static Placeholder</span>
+
+            </li>
+        </ul>
+    </div>
+
 </div>
+
 </body>
 </html>

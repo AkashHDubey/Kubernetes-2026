@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
@@ -24,7 +26,9 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -35,8 +39,16 @@ public class SimpleController {
     RestClient restClient;
 
     @GetMapping("/")
-    public String getSimpleResponse(){
+    public String getSimpleResponse(Model model){
+        List<String> items = Arrays.asList("Learn Kubernetes", "Deploy Stuff", "Redeploy stuff", "Check stuff");
+        model.addAttribute("itemList", items);
         return "todo";
+    }
+
+    @PostMapping("/send-todo")
+    public String receiveMessage(@RequestParam("messageText") String messageText) {
+        System.out.println("User sent: " + messageText);
+        return "redirect:/";
     }
 
     @GetMapping("/image")
