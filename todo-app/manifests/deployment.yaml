@@ -12,9 +12,16 @@ spec:
       labels:
         app: todo-app
     spec:
+      volumes:
+        - name: image-cache
+          persistentVolumeClaim:
+            claimName: file-share
       containers:
         - name: todo-app
-          image: dubeaka/todo-app:2.2
+          image: dubeaka/todo-app:5.0
+          volumeMounts:
+            - name: image-cache
+              mountPath: /usr/src/app/files
           env:
             - name: PORT
               value: "8080"
