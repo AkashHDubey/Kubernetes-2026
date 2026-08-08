@@ -19,6 +19,7 @@ public class LogApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LogApplication.class, args);
+
 		String randomString = UUID.randomUUID().toString();
 		while (true){
             currentString = Instant.now()+" "+randomString;
@@ -29,6 +30,7 @@ public class LogApplication {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             try {
                 TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {

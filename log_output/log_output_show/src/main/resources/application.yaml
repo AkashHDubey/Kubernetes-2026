@@ -1,6 +1,6 @@
 spring:
   application:
-    name: log
+    name: log_output_show
 
 server:
   port: ${PORT:8085}

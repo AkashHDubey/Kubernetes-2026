@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-output-dep
+  name: log-output-deployment
 spec:
   replicas: 1
   selector:
@@ -15,15 +15,15 @@ spec:
       volumes: # Define volume
         - name: shared
           persistentVolumeClaim:
-            claimName: ping-pong-share
+            claimName: file-share
       containers:
         - name: log-output-generate
-          image: dubeaka/log-generate:2.0
+          image: dubeaka/log-output-generate:1.0
           volumeMounts: # Mount volume
             - name: shared
               mountPath: /usr/src/app/file
         - name: log-output-show
-          image: dubeaka/log-show:2.1
+          image: dubeaka/log-output-show:2.0
           volumeMounts: # Mount volume
             - name: shared
               mountPath: /usr/src/app/file
