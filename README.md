@@ -19,3 +19,6 @@
 [1.12](https://github.com/AkashHDubey/Kubernetes-2026/tree/1.12/todo-app)  
 [1.13](https://github.com/AkashHDubey/Kubernetes-2026/tree/1.13/todo-app)
 
+### Chapter 3
+[2.1](https://github.com/AkashHDubey/Kubernetes-2026/tree/2.1/log_output)
+
