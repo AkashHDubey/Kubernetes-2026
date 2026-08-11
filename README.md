@@ -21,4 +21,5 @@
 
 ### Chapter 3
 [2.1](https://github.com/AkashHDubey/Kubernetes-2026/tree/2.1/log_output)
+[2.2](https://github.com/AkashHDubey/Kubernetes-2026/tree/2.2/todo-app)
 
