@@ -12,16 +12,24 @@ spec:
       labels:
         app: todo-app
     spec:
-      volumes:
-        - name: image-cache
+      volumes: # Define volume
+        - name: shared
           persistentVolumeClaim:
             claimName: file-share
       containers:
-        - name: todo-app
-          image: dubeaka/todo-app:5.0
+        - name: todo-app-fe
+          image: dubeaka/todo-app:3.0
           volumeMounts:
-            - name: image-cache
+            - name: shared
               mountPath: /usr/src/app/files
           env:
             - name: PORT
-              value: "8080"
+              value: "8081"
+        - name: todo-app-be
+          image: dubeaka/todo-app-backend:2.0
+          volumeMounts:
+            - name: shared
+              mountPath: /usr/src/app/files
+          env:
+            - name: PORT
+              value: "8082"

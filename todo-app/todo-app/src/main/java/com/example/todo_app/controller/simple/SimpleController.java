@@ -1,5 +1,10 @@
 package com.example.todo_app.controller.simple;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -20,17 +25,16 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.Base64;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.stream.Stream;
 
 @Controller
 public class SimpleController {
@@ -40,15 +44,30 @@ public class SimpleController {
 
     @GetMapping("/")
     public String getSimpleResponse(Model model){
-        List<String> items = Arrays.asList("Learn Kubernetes", "Deploy Stuff", "Redeploy stuff", "Check stuff");
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        String targetUrl = "http://todo-app-svc:2346/backend/todos";
+        Request request = new Request.Builder()
+                .url(targetUrl)
+                .get()
+                .addHeader("Accept", "application/json")
+                .build();
+
+        List<String> items = new ArrayList<>();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            if (response.isSuccessful() && response.body() != null) {
+                String list = response.body().string();
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<String>>(){}.getType();
+                items = gson.fromJson(list, listType);
+            } else {
+                System.err.println("Request failed with code: " + response.code());
+            }
+        } catch (IOException e) {
+            System.err.println("Network error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
         model.addAttribute("itemList", items);
         return "todo";
-    }
-
-    @PostMapping("/send-todo")
-    public String receiveMessage(@RequestParam("messageText") String messageText) {
-        System.out.println("User sent: " + messageText);
-        return "redirect:/";
     }
 
     @GetMapping("/image")

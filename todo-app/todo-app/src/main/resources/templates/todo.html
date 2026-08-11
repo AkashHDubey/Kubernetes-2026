@@ -18,8 +18,9 @@
     </div>
 
     <!-- Form Section styled with Tailwind -->
-    <form th:action="@{/send-todo}" method="post" class="flex gap-2 mb-8">
+    <form id="todo-form" class="flex gap-2 mb-8">
         <input type="text"
+               id="messageText"
                name="messageText"
                placeholder="Enter the todo (max 140 characters)"
                maxlength="140"
@@ -36,15 +37,11 @@
         <h2 class="text-xl font-bold text-slate-700 mb-4 flex items-center justify-between">
             <span>Tasks</span>
             <!-- Optional: Shows total number of tasks from your model -->
-            <span th:text="${#lists.size(itemList)}" class="bg-slate-100 text-slate-600 text-xs px-2.5 py-1 rounded-full font-semibold">0</span>
         </h2>
 
         <!-- Flex list for clean rows instead of overlapping grids -->
-        <ul class="flex flex-col gap-3">
+        <ul class="flex flex-col gap-3" id="todo-list">
             <!-- If the list is empty, show a fallback message -->
-            <li th:if="${#lists.isEmpty(itemList)}" class="text-center py-8 text-slate-400 border-2 border-dashed border-slate-100 rounded-xl">
-                No todos yet. Add one above!
-            </li>
 
             <!-- Thymeleaf Loop -->
             <li th:each="item : ${itemList}"
@@ -58,5 +55,6 @@
 
 </div>
 
+<script th:src="@{/js/todo.js}"></script>
 </body>
 </html>
